@@ -1,0 +1,14 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb-dev-community
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_DATABASE: dev-community
+    volumes:
+      - ./data/db:/data/db # Persist MongoDB data
+      - ./data/configdb:/data/configdb # Persist MongoDB configuration
