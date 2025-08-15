@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsOptional, IsArray } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsArray,
+  IsMongoId,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreatePostDto {
@@ -9,6 +15,10 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   content: string;
+
+  @IsMongoId()
+  @IsNotEmpty()
+  author: string;
 
   @IsArray()
   @IsOptional()
