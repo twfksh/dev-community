@@ -1,7 +1,7 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsMongoId } from 'class-validator';
 
 export class CreateCommentDto {
-  @IsString()
+  @IsMongoId()
   @IsNotEmpty()
   author: string;
 
