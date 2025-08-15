@@ -9,4 +9,12 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('/health')
+  getHealth(): string {
+    if (this.appService.isMongooseConnected()) {
+      return 'OK';
+    }
+    return 'Mongoose is not connected';
+  }
 }
