@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { hash, genSalt } from 'bcrypt';
 
 @Controller('api/users')
 export class UsersController {
@@ -17,7 +16,6 @@ export class UsersController {
 
   @Post()
   async createUser(@Body() user: CreateUserDto) {
-    user.password = await hash(user.password, await genSalt());
     return await this.usersService.create(user);
   }
 
