@@ -3,6 +3,7 @@ export default () => ({
   port: parseInt(process.env.PORT ?? '3000', 10),
   dbUri:
     process.env.MONGO_URI ||
+    process.env.MONGODB_URI ||
     (() => {
       throw new Error('MONGO_URI not set');
     })(),
