@@ -26,7 +26,11 @@ export class CommentsService {
     return await this.commentModel.find();
   }
 
-  async findOne(postId: string): Promise<Comment[] | null> {
+  async findOne(commentId: string): Promise<Comment | null> {
+    return await this.commentModel.findById(commentId);
+  }
+
+  async findByPostId(postId: string): Promise<Comment[] | null> {
     return await this.commentModel.find({ post: postId });
   }
 
