@@ -19,6 +19,6 @@ import { ConfigService } from '@nestjs/config';
     }),
   ],
   providers: [AuthService, AuthGuard, RolesGuard],
-  controllers: [AuthController, AuthGuard],
+  controllers: [AuthController],
 })
 export class AuthModule {}

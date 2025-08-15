@@ -14,13 +14,13 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @Post('signup')
   async registerUser(@Body() signUpDto: SignUpDto) {
-    const newUser = await this.usersService.create(signUpDto);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...safeUser } = newUser;
-    return {
-      ...(await this.authService.signIn(newUser.email, newUser.password)),
-      user: safeUser,
-    };
+    // const newUser = await this.usersService.create(signUpDto);
+    // const { password, ...user } = newUser;
+    // return {
+    //   ...(await this.authService.signIn(user.email, password)),
+    //   user,
+    // };
+    return await this.usersService.create(signUpDto);
   }
 
   @HttpCode(HttpStatus.OK)

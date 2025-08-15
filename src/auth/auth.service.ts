@@ -16,18 +16,16 @@ export class AuthService {
 
   async signIn(email: string, passwd: string): Promise<AuthToken> {
     const user = await this.usersService.findOne(email);
-    if (!user || (await bcrypt.compare(passwd, user.password))) {
+    if (!user || !(await bcrypt.compare(passwd, user.password))) {
       throw new UnauthorizedException(
         'Invalid login credentials. Please enter a valid email and password.',
       );
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...result } = user;
 
     const payload: AuthPayload = {
-      sub: result._id.toString(),
-      email: result.email,
-      role: result.role,
+      sub: user._id.toString(),
+      email: user.email,
+      role: user.role,
       iat: Math.floor(Date.now() / 1000),
     };
 
