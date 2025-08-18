@@ -4,27 +4,28 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from 'src/decorators/roles.decorator';
-import { Role } from 'src/enums/role.enum';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { AuthPayload } from '../dtos/auth-payload.dto';
-import extractTokenFromHeader from '../auth.helper';
+import { AuthPayload } from '../types/auth-payload';
+import { Reflector } from '@nestjs/core';
+import { IS_PUBLIC_KEY } from 'src/decorators/public.decorator';
+import extractTokenFromHeader from '../helpers/auth.helper';
 
 @Injectable()
-export class RolesGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(
+    private jwtService: JwtService,
     private reflector: Reflector,
-    private readonly jwtService: JwtService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (!requiredRoles) return true;
+    if (isPublic) {
+      return true;
+    }
 
     const req = context.switchToHttp().getRequest<Request>();
     const token = extractTokenFromHeader(req);
@@ -43,6 +44,7 @@ export class RolesGuard implements CanActivate {
       });
 
     req['user'] = payload;
-    return requiredRoles.some((role) => payload.role?.includes(role));
+
+    return true;
   }
 }
