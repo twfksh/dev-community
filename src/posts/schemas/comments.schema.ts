@@ -1,12 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+import { SchemaTypes, Types } from 'mongoose';
+import { User } from 'src/users/schemas/users.schema';
+import { Post } from './posts.schema';
 
 @Schema({ timestamps: true })
 export class Comment {
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: SchemaTypes.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop({ type: SchemaTypes.ObjectId, ref: User.name, required: true })
   author: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Post', required: true })
+  @Prop({ type: SchemaTypes.ObjectId, ref: Post.name, required: true })
   post: Types.ObjectId;
 
   @Prop({ required: true })

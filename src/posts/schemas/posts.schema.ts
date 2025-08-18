@@ -1,8 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+import { SchemaTypes, Types } from 'mongoose';
+import { User } from 'src/users/schemas/users.schema';
 
 @Schema({ timestamps: true })
 export class Post {
+  @Prop({ type: SchemaTypes.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
   @Prop({ required: true })
   title: string;
 
@@ -12,7 +16,7 @@ export class Post {
   @Prop({ type: [String], default: [] })
   tags: string[];
 
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: SchemaTypes.ObjectId, ref: User.name, required: true })
   author: Types.ObjectId;
 }
 
