@@ -9,12 +9,12 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
 import { User } from 'src/decorators/user.decorator';
-import { AuthPayload } from 'src/auth/dtos/auth-payload.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { AuthPayload } from 'src/types/auth-payload';
 
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('api/users')
