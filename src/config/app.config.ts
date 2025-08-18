@@ -13,6 +13,6 @@ export default () => ({
       (() => {
         throw new Error('JWT_SECRET not set');
       })(),
-    expiresIn: process.env.JWT_EXPIRES_IN ?? '1h',
+    expiresIn: process.env.JWT_EXPIRES_IN ?? '24h',
   },
 });
