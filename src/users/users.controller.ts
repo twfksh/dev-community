@@ -16,8 +16,8 @@ import { Role } from 'src/enums/role.enum';
 import { User } from 'src/decorators/user.decorator';
 import { AuthPayload } from 'src/auth/dtos/auth-payload.dto';
 
-@Controller('api/users')
 @UseGuards(AuthGuard, RolesGuard)
+@Controller('api/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
