@@ -1,6 +1,7 @@
 import { IsEnum } from 'class-validator';
+import { Reactions } from '../enums/reaction.enum';
 
 export class UpdateReactionDto {
-  @IsEnum(['like', 'dislike', 'love', 'angry', 'sad'])
-  type: 'like' | 'dislike' | 'love' | 'angry' | 'sad';
+  @IsEnum(Reactions)
+  type: string;
 }

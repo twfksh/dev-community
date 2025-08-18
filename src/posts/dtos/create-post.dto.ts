@@ -3,7 +3,7 @@ import {
   IsString,
   IsOptional,
   IsArray,
-  IsMongoId,
+  // IsMongoId,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -16,9 +16,9 @@ export class CreatePostDto {
   @IsNotEmpty()
   content: string;
 
-  @IsMongoId()
-  @IsNotEmpty()
-  author: string;
+  // @IsMongoId()
+  // @IsNotEmpty()
+  // author: string;
 
   @IsArray()
   @IsOptional()
