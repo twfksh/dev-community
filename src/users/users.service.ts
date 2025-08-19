@@ -14,8 +14,7 @@ export class UsersService {
 
   async create(user: CreateUserDto): Promise<User> {
     user.password = await hash(user.password, await genSalt());
-    const createdUser = new this.usersModel(user);
-    return await createdUser.save();
+    return await this.usersModel.create(user);
   }
 
   async findAll(): Promise<User[]> {

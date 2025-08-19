@@ -57,7 +57,7 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   @IsEnum(['user', 'admin'], { message: 'Invalid user type' })
-  type: string;
+  role?: string;
 
   @IsOptional()
   @IsArray()
