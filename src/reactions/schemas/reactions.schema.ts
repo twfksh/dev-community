@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, SchemaTypes } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
 import { Post } from 'src/posts/schemas/posts.schema';
-import { Comment } from 'src/posts/schemas/comments.schema';
-import { Reactions } from 'src/posts/enums/reaction.enum';
+import { Comment } from 'src/comments/schemas/comments.schema';
+import { Reactions } from 'src/reactions/enums/reaction.enum';
 
 @Schema({ timestamps: true })
 export class Reaction {

@@ -1,7 +1,7 @@
 import { IsEnum, IsMongoId, IsNotEmpty } from 'class-validator';
-import { Reactions } from 'src/posts/enums/reaction.enum';
-import { Post } from '../schemas/posts.schema';
-import { Comment } from '../schemas/comments.schema';
+import { Reactions } from 'src/reactions/enums/reaction.enum';
+import { Post } from '../../posts/schemas/posts.schema';
+import { Comment } from 'src/comments/schemas/comments.schema';
 
 export class CreateReactionDto {
   @IsMongoId()

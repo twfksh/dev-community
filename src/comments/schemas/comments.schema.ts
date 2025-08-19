@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
-import { Post } from './posts.schema';
+import { Post } from 'src/posts/schemas/posts.schema';
 
 @Schema({ timestamps: true })
 export class Comment {
