@@ -15,11 +15,12 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { User } from 'src/decorators/user.decorator';
 import { UpdateCommentDto } from './dtos/update-comment.dto';
+import { Types } from 'mongoose';
 
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('api/comments')
 export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) {}
+  constructor(private readonly commentsService: CommentsService) { }
 
   @Post(':postId')
   createComment(
@@ -37,8 +38,8 @@ export class CommentsController {
   ) {
     if (query.postId && !query.commentId) {
       return this.commentsService.findByPostIdWithAuthorsAggregated(
-        userId,
-        query.postId,
+        new Types.ObjectId(userId),
+        new Types.ObjectId(query.postId),
       );
     }
     if (query.commentId && !query.postId) {
@@ -54,11 +55,11 @@ export class CommentsController {
     @Param('id') commentId: string,
     @Body() commentDto: UpdateCommentDto,
   ) {
-    return this.commentsService.update(userId, commentId, commentDto);
+    return this.commentsService.update(new Types.ObjectId(userId), new Types.ObjectId(commentId), commentDto);
   }
 
   @Delete(':id')
   deleteComment(@User('sub') userId: string, @Param('id') commentId: string) {
-    return this.commentsService.remove(userId, commentId);
+    return this.commentsService.remove(new Types.ObjectId(userId), new Types.ObjectId(commentId));
   }
 }

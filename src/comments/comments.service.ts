@@ -9,19 +9,19 @@ import { UpdateCommentDto } from './dtos/update-comment.dto';
 export class CommentsService {
   constructor(
     @InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
-  ) {}
+  ) { }
 
   async create(
     author: string,
     postId: string,
     commentData: CreateCommentDto,
   ): Promise<Comment> {
-    const newComment = new this.commentModel({
+    const newComment = await this.commentModel.create({
       post: postId,
       author,
       ...commentData,
     });
-    return newComment.save();
+    return newComment;
   }
 
   async findAll(author: string): Promise<Comment[] | null> {
@@ -33,8 +33,8 @@ export class CommentsService {
   }
 
   async findByPostIdWithAuthorsAggregated(
-    author: string,
-    postId: string,
+    author: Types.ObjectId,
+    postId: Types.ObjectId,
   ): Promise<any[]> {
     return await this.commentModel
       .aggregate([
@@ -72,8 +72,8 @@ export class CommentsService {
   }
 
   async update(
-    author: string,
-    commentId: string,
+    author: Types.ObjectId,
+    commentId: Types.ObjectId | string,
     commentData: UpdateCommentDto,
   ): Promise<Comment | null> {
     return await this.commentModel.findOneAndUpdate(
@@ -85,7 +85,7 @@ export class CommentsService {
     );
   }
 
-  async remove(author: string, commentId: string): Promise<Comment | null> {
+  async remove(author: Types.ObjectId, commentId: Types.ObjectId | string): Promise<Comment | null> {
     return await this.commentModel.findOneAndDelete({ _id: commentId, author });
   }
 }
