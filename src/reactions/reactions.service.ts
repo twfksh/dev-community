@@ -8,34 +8,34 @@ import { UpdateReactionDto } from './dtos/update-reaction.dto';
 @Injectable()
 export class ReactionsService {
   constructor(
-    @InjectModel(Reaction.name) private readonly reactionMode: Model<Reaction>,
-  ) {}
+    @InjectModel(Reaction.name) private readonly reactionModel: Model<Reaction>,
+  ) { }
 
   async create(
     user: string,
     reactionData: CreateReactionDto,
   ): Promise<Reaction> {
-    const newReaction = new this.reactionMode({ ...reactionData, user });
-    return await newReaction.save();
+    const newReaction = await this.reactionModel.create({ ...reactionData, user });
+    return newReaction;
   }
 
   async findAll(): Promise<Reaction[]> {
-    return await this.reactionMode.find().exec();
+    return await this.reactionModel.find().exec();
   }
 
-  async findByPostId(entityId: string): Promise<Reaction[]> {
-    return await this.reactionMode.find({ entityId: entityId }).exec();
+  async findByEntityId(entityId: string): Promise<Reaction[]> {
+    return await this.reactionModel.find({ entityId: entityId }).exec();
   }
 
   async findByUserId(userId: string): Promise<Reaction[]> {
-    return await this.reactionMode.find({ user: userId }).exec();
+    return await this.reactionModel.find({ user: userId }).exec();
   }
 
   async findByUserIdAndPostId(
     userId: string,
     entityId: string,
   ): Promise<Reaction | null> {
-    return await this.reactionMode
+    return await this.reactionModel
       .findOne({ user: userId, entityId: entityId })
       .exec();
   }
@@ -45,7 +45,7 @@ export class ReactionsService {
     entityId: string,
     reactionData: UpdateReactionDto,
   ): Promise<Reaction | null> {
-    return await this.reactionMode.findOneAndUpdate(
+    return await this.reactionModel.findOneAndUpdate(
       { user: userId, entityId: entityId },
       reactionData,
       { new: true },
@@ -53,8 +53,7 @@ export class ReactionsService {
   }
 
   async remove(userId: string, entityId: string): Promise<Reaction | null> {
-    return await this.reactionMode
-      .findOneAndDelete({ user: userId, entityId: entityId })
-      .exec();
+    return await this.reactionModel
+      .findOneAndDelete({ user: userId, entityId: entityId });
   }
 }

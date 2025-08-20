@@ -19,7 +19,7 @@ import { UpdateReactionDto } from './dtos/update-reaction.dto';
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('api/reactions')
 export class ReactionsController {
-  constructor(private readonly reactionsService: ReactionsService) {}
+  constructor(private readonly reactionsService: ReactionsService) { }
 
   @Post()
   createReaction(
@@ -39,9 +39,9 @@ export class ReactionsController {
   }
 
   @Get()
-  getReactions(@Query('entityId') entityId: string) {
+  getReactions(@Query('entityId') entityId: string | undefined = undefined) {
     if (entityId) {
-      return this.reactionsService.findByPostId(entityId);
+      return this.reactionsService.findByEntityId(entityId);
     }
     return this.reactionsService.findAll();
   }
