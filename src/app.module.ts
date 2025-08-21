@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { CommentsModule } from './comments/comments.module';
 import { ReactionsModule } from './reactions/reactions.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -26,6 +27,9 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
         uri: configService.get<string>('dbUri'),
       }),
       inject: [ConfigService],
+    }),
+    CacheModule.register({
+      isGlobal: true,
     }),
     UsersModule,
     PostsModule,
