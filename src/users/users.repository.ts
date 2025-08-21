@@ -15,7 +15,7 @@ export class UserRepository extends BaseRepository<User> {
     }
 
     async findAll(filter?: any, options?: { page?: number; limit?: number; sort?: any }): Promise<User[]> {
-        const { page = 1, limit = 10, sort = {} } = options ?? {};
+        const { page = 1, limit = 10, sort = { createdAt: -1 } } = options ?? {};
         return this.userModel
             .find({ ...filter })
             .sort(sort)
