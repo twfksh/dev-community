@@ -1,35 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Post } from './schemas/posts.schema';
-import { Model } from 'mongoose';
 import { CreatePostDto } from './dtos/create-post.dto';
+import { PostRepository } from './posts.repository';
+import { Mapper } from 'src/helpers/dto-mapper.helper';
+import { UpdatePostDto } from './dtos/update-post.dto';
 
 @Injectable()
 export class PostsService {
-  constructor(
-    @InjectModel(Post.name) private readonly postModel: Model<Post>,
-  ) {}
+  constructor(private readonly postRepository: PostRepository) { }
 
   async create(post: CreatePostDto): Promise<Post> {
-    const createdPost = new this.postModel(post);
-    return await createdPost.save();
+    return await this.postRepository.create(Mapper.toEntity(post, Post));
   }
 
   async findAll(): Promise<Post[]> {
-    return await this.postModel.find().exec();
+    return await this.postRepository.findAll();
   }
 
   async findOne(id: string): Promise<Post | null> {
-    return await this.postModel.findById(id).exec();
+    return this.postRepository.findById(id);
   }
 
-  async update(id: string, post: CreatePostDto): Promise<Post | null> {
-    return await this.postModel
-      .findByIdAndUpdate(id, post, { new: true })
-      .exec();
+  async update(id: string, post: UpdatePostDto): Promise<Post | null> {
+    return await this.postRepository.update(id, Mapper.toEntity(post, Post));
   }
 
   async remove(id: string): Promise<Post | null> {
-    return await this.postModel.findByIdAndDelete(id).exec();
+    return await this.postRepository.delete(id);
   }
 }
