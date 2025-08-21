@@ -35,7 +35,7 @@ describe('PostsService', () => {
 
   describe('createPost', () => {
     it('should create a post', async () => {
-      const dto: CreatePostDto = { author: 'mock-author-id', title: 'Test Post', content: 'Test Content' };
+      const dto: CreatePostDto = { title: 'Test Post', content: 'Test Content' };
       const createdPost = { id: '1', ...dto };
 
       mockPostsRepository.create.mockResolvedValue(createdPost);
@@ -47,7 +47,7 @@ describe('PostsService', () => {
     });
 
     it('should throw an error if creation fails', async () => {
-      const dto: CreatePostDto = { author: 'mock-author-id', title: 'Test Post', content: 'Test Content' };
+      const dto: CreatePostDto = { title: 'Test Post', content: 'Test Content' };
       const errorMessage = 'Error creating post';
 
       mockPostsRepository.create.mockRejectedValue(new Error(errorMessage));
